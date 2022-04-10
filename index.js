@@ -8,7 +8,7 @@ const {
   editDirector,
   deleteDirector,
 } = require("./Routes/directorRoutes");
-const { getAllMovies, addMovie, getMovieById, editMovie, deleteMovie, getAllMoviesOfADirector } = require("./Routes/movieRoutes");
+const { getAllMovies, addMovie, getMovieById, editMovie, deleteMovie, getAllMoviesOfADirector,getMoviesByCategory, getMoviesByCelebrity } = require("./Routes/movieRoutes");
 
 const app = express();
 app.use(bodyParser.json());
@@ -27,7 +27,9 @@ app.post("/movie", addMovie);
 app.get('/movie/:id',getMovieById);
 app.put('/movie/:id',editMovie);
 app.delete('/movie/:id',deleteMovie);
-app.get('/movies/:id',getAllMoviesOfADirector)
+app.get('/movies/:id',getAllMoviesOfADirector);
+app.get('/movies/category/:category',getMoviesByCategory);
+app.get('/movies/celebrity/:celebrity',getMoviesByCelebrity);
 
 const PORT = process.env.PORT || 3300;
 app.listen(PORT, () => {

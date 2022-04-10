@@ -14,3 +14,6 @@ CREATE TABLE movies(
     movieposter VARCHAR(255),
     createdat DATE  DEFAULT CURRENT_DATE
 );
+
+
+ALTER TABLE movies ADD COLUMN categories TEXT[], ADD COLUMN leadroles TEXT[];

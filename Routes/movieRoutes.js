@@ -12,10 +12,26 @@ const getAllMovies = (req, res) => {
 };
 
 const addMovie = (req, res) => {
-  const { director_id, moviename, moviedesc, movieposter } = req.body;
+  let {
+    director_id,
+    moviename,
+    moviedesc,
+    movieposter,
+    categories,
+    leadroles,
+  } = req.body;
+  categories = categories.split(",");
+  leadroles = leadroles.split(",");
   const queryString =
-    "INSERT INTO movies(director_id, moviename,moviedesc,movieposter) VALUES($1, $2, $3, $4) RETURNING *";
-  const values = [director_id, moviename, moviedesc, movieposter];
+    "INSERT INTO movies(director_id, moviename,moviedesc,movieposter,categories,leadroles) VALUES($1, $2, $3, $4, $5, $6) RETURNING *";
+  const values = [
+    director_id,
+    moviename,
+    moviedesc,
+    movieposter,
+    categories,
+    leadroles,
+  ];
   client.query(queryString, values, (error, result) => {
     if (error) {
       return res.status(404).send({ error: "Technical issue" });
@@ -38,8 +54,10 @@ const getMovieById = (req, res) => {
 };
 const editMovie = (req, res) => {
   const movieId = req.params.id;
-  const { moviename, moviedesc, movieposter } = req.body;
-  const queryString = `UPDATE movies SET moviename='${moviename}',moviedesc='${moviedesc}',movieposter='${movieposter}' WHERE id='${movieId}' RETURNING *`;
+  let { moviename, moviedesc, movieposter, categories, leadroles } = req.body;
+  categories = `{${categories}}`;
+  leadroles = `{${leadroles}}`;
+  const queryString = `UPDATE movies SET moviename='${moviename}',moviedesc='${moviedesc}',movieposter='${movieposter}',categories='${categories}',leadroles='${leadroles}' WHERE id='${movieId}' RETURNING *`;
   client.query(queryString, (error, result) => {
     if (error) {
       return res.status(404).send({ error: "Technical issue" });
@@ -66,13 +84,37 @@ const getAllMoviesOfADirector = (req, res) => {
   const queryString = `SELECT * FROM movies WHERE director_id=${directorId}`;
   client.query(queryString, (error, result) => {
     if (error) {
-      console.log(error);
       return res.status(404).send({ error: "Technical issue" });
     } else {
       return res.status(200).send({ data: result.rows });
     }
   });
 };
+
+const getMoviesByCategory = (req, res) => {
+  const category = req.params.category;
+  const queryString = `SELECT * FROM movies WHERE '${category}' = ANY(categories::TEXT[])`;
+  client.query(queryString, (error, result) => {
+    if (error) {
+      return res.status(404).send({ error: "Technical issue" });
+    } else {
+      return res.status(200).send({ data: result.rows });
+    }
+  });
+};
+
+const getMoviesByCelebrity=(req,res)=>{
+    const {celebrity}=req.params;
+    const queryString = `SELECT * FROM movies WHERE '${celebrity}' = ANY(leadroles::TEXT[])`;
+    client.query(queryString, (error, result) => {
+      if (error) {
+        console.log(error);
+        return res.status(404).send({ error: "Technical issue" });
+      } else {
+        return res.status(200).send({ data: result.rows });
+      }
+    });
+}
 
 module.exports = {
   getAllMovies,
@@ -81,4 +123,6 @@ module.exports = {
   editMovie,
   deleteMovie,
   getAllMoviesOfADirector,
+  getMoviesByCategory,
+  getMoviesByCelebrity
 };
