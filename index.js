@@ -29,7 +29,7 @@ app.put('/movie/:id',editMovie);
 app.delete('/movie/:id',deleteMovie);
 app.get('/movies/:id',getAllMoviesOfADirector)
 
-const PORT = 3300 || process.env.PORT;
+const PORT = process.env.PORT || 3300;
 app.listen(PORT, () => {
   console.log("Server is running in PORT : ", PORT);
 });
