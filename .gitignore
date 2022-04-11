@@ -1,3 +1,2 @@
-/node_modules
-
-/devConnection.js
+node_modules
+devConnection.js
