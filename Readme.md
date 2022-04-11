@@ -37,7 +37,7 @@
     movieposter VARCHAR(255),
     createdat DATE  DEFAULT CURRENT_DATE,
     categories TEXT[],
-    leadroles TEXT[];
+    leadroles TEXT[]
     );
     ```
 11. Run `\q` to exit the database.
