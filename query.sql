@@ -12,7 +12,9 @@ CREATE TABLE movies(
     moviename VARCHAR(30),
     moviedesc VARCHAR(255),
     movieposter VARCHAR(255),
-    createdat DATE  DEFAULT CURRENT_DATE
+    createdat DATE  DEFAULT CURRENT_DATE,
+    categories TEXT[], 
+    leadroles TEXT[];
 );
 
 
