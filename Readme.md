@@ -44,7 +44,7 @@
 11. Now use the api to add some data to the database.
 
 ### Routes
-[CurrUrl](`https://tmdb-node-api.herokuapp.com/`)
+[CurrUrl](https://tmdb-node-api.herokuapp.com/)
 
 * get('/directors')
   
