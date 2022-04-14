@@ -18,7 +18,7 @@ app.use(function (req, res, next) {
 
   // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 
-  const corsWhiteList = ['http://localhost:3000/', "https://the-imdb-project.herokuapp.com/"]
+  const corsWhiteList = ['http://localhost:3000', "https://the-imdb-project.herokuapp.com"]
 
   if (corsWhiteList.indexOf(req.headers.origin) !== -1) {
     res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
